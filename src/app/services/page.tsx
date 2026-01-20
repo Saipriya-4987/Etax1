@@ -61,7 +61,7 @@ const services = [
     ],
     pricing: 'Starting at ₹1,499/quarter',
     color: 'bg-purple-500',
-    href: '/services/tds',
+    href: '/services',
   },
   {
     id: 'business-registration',
@@ -79,7 +79,7 @@ const services = [
     ],
     pricing: 'Starting at ₹4,999',
     color: 'bg-orange-500',
-    href: '/services/business-registration',
+    href: '/services',
   },
   {
     id: 'tax-planning',
@@ -97,7 +97,7 @@ const services = [
     ],
     pricing: 'Starting at ₹2,999',
     color: 'bg-cyan-500',
-    href: '/services/tax-planning',
+    href: '/services',
   },
   {
     id: 'audit-assurance',
@@ -115,7 +115,7 @@ const services = [
     ],
     pricing: 'Custom Quote',
     color: 'bg-red-500',
-    href: '/services/audit',
+    href: '/services',
   },
   {
     id: 'compliance',
@@ -133,7 +133,7 @@ const services = [
     ],
     pricing: 'Starting at ₹5,999/year',
     color: 'bg-indigo-500',
-    href: '/services/compliance',
+    href: '/services',
   },
   {
     id: 'legal-services',
@@ -151,7 +151,7 @@ const services = [
     ],
     pricing: 'Custom Quote',
     color: 'bg-pink-500',
-    href: '/services/legal',
+    href: '/services',
   },
 ]
 

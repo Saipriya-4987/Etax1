@@ -124,7 +124,7 @@ export default function HomePage() {
               <p className="text-gray-600 mb-8 grow">
                 Quick and simple ITR filing with step-by-step guidance and complete compliance support — all done online.
               </p>
-              <Link href="/dashboard/itr-filing/new" className="mt-auto">
+              <Link href="/dashboard/itr/new" className="mt-auto">
                 <Button size="lg" variant="secondary" className="w-full">
                   File Your ITR Now
                   <ArrowRight className="w-5 h-5" />
@@ -235,12 +235,12 @@ export default function HomePage() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
-              { icon: Calculator, title: 'Taxation Services', desc: 'ITR, GST & tax advisory by experts', color: 'blue', href: '/itr-filing' },
-              { icon: FileText, title: 'GST Filing', desc: 'GST registration and compliance', color: 'green', href: '/gst-filing' },
-              { icon: ShieldCheck, title: 'Advisory Services', desc: 'Compliance, strategy & growth guidance', color: 'purple', href: '/services' },
-              { icon: Briefcase, title: 'CFO Services', desc: 'On-demand CFOs for finance & payroll', color: 'orange', href: '/services' },
-              { icon: Building2, title: 'Structuring Services', desc: 'Company setup & business restructuring', color: 'indigo', href: '/services' },
-              { icon: Award, title: 'Funding Services', desc: 'Fundraising & investor-readiness support', color: 'pink', href: '/services' },
+              { icon: Calculator, title: 'ITR Filing', desc: 'Income tax returns filed by expert CAs', color: 'blue', href: '/services/itr-filing' },
+              { icon: FileText, title: 'GST Services', desc: 'GST registration, filing & compliance', color: 'green', href: '/services/gst' },
+              { icon: ShieldCheck, title: 'Tax Advisory', desc: 'Expert tax planning and consultation', color: 'purple', href: '/services' },
+              { icon: Briefcase, title: 'CFO Services', desc: 'On-demand CFOs for finance management', color: 'orange', href: '/services' },
+              { icon: Building2, title: 'Business Setup', desc: 'Company incorporation & structuring', color: 'indigo', href: '/services' },
+              { icon: Award, title: 'Compliance', desc: 'ROC filings & statutory compliance', color: 'pink', href: '/services' },
             ].map((service) => (
               <Link 
                 key={service.title}
