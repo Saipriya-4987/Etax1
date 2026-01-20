@@ -7,7 +7,8 @@ import {
   FileText, Upload, Clock, CheckCircle, AlertCircle, 
   CreditCard, Bell, Settings, LogOut, User, Home, 
   Receipt, TrendingUp, HelpCircle, ChevronRight,
-  Plus, Download, Eye, Calendar, BarChart3, Loader2
+  Plus, Download, Eye, Calendar, BarChart3, Loader2,
+  Calculator, MessageSquare, Shield
 } from 'lucide-react'
 import { Button, Card, CardContent, Badge } from '@/components/ui'
 import { useAuth } from '@/contexts'
@@ -48,11 +49,15 @@ interface DashboardData {
 
 const sidebarItems = [
   { icon: Home, label: 'Dashboard', href: '/dashboard', active: true },
+  { icon: User, label: 'My Profile', href: '/dashboard/profile' },
   { icon: FileText, label: 'ITR Filing', href: '/dashboard/itr' },
   { icon: Receipt, label: 'GST Services', href: '/dashboard/gst' },
   { icon: Upload, label: 'Documents', href: '/dashboard/documents' },
-  { icon: HelpCircle, label: 'Support', href: '/contact' },
-  { icon: Settings, label: 'Settings', href: '#', disabled: true },
+  { icon: CreditCard, label: 'Payments', href: '/dashboard/payments' },
+  { icon: Bell, label: 'Notifications', href: '/dashboard/notifications' },
+  { icon: HelpCircle, label: 'Support Tickets', href: '/dashboard/tickets' },
+  { icon: TrendingUp, label: 'Tax Calculator', href: '/dashboard/calculator' },
+  { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
 ]
 
 export default function DashboardPage() {
@@ -165,7 +170,7 @@ export default function DashboardPage() {
         <nav className="p-4 space-y-1">
           {sidebarItems.map((item) => {
             const Icon = item.icon
-            const isDisabled = item.disabled
+            const isDisabled = 'disabled' in item ? item.disabled : false
             
             if (isDisabled) {
               return (
@@ -342,6 +347,108 @@ export default function DashboardPage() {
                           <HelpCircle className="w-6 h-6 text-[#F59E0B]" />
                         </div>
                         <p className="font-medium text-gray-900">Get Support</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Available Features */}
+              <div className="mb-8">
+                <h2 className="text-lg font-bold text-gray-900 mb-4">Available Features</h2>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <Link href="/dashboard/profile">
+                    <Card className="hover:shadow-lg transition-all hover:border-[#1E3A8A] cursor-pointer h-full">
+                      <CardContent className="p-5">
+                        <div className="flex items-start gap-4">
+                          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <User className="w-5 h-5 text-blue-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900 mb-1">My Profile</h3>
+                            <p className="text-sm text-gray-600">Manage your personal information and tax details</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  <Link href="/dashboard/calculator">
+                    <Card className="hover:shadow-lg transition-all hover:border-[#10B981] cursor-pointer h-full">
+                      <CardContent className="p-5">
+                        <div className="flex items-start gap-4">
+                          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <Calculator className="w-5 h-5 text-green-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900 mb-1">Tax Calculator</h3>
+                            <p className="text-sm text-gray-600">Calculate Income Tax, GST, and TDS instantly</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  <Link href="/dashboard/payments">
+                    <Card className="hover:shadow-lg transition-all hover:border-[#8B5CF6] cursor-pointer h-full">
+                      <CardContent className="p-5">
+                        <div className="flex items-start gap-4">
+                          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <CreditCard className="w-5 h-5 text-purple-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900 mb-1">Payments</h3>
+                            <p className="text-sm text-gray-600">View transaction history and download invoices</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  <Link href="/dashboard/tickets">
+                    <Card className="hover:shadow-lg transition-all hover:border-[#F59E0B] cursor-pointer h-full">
+                      <CardContent className="p-5">
+                        <div className="flex items-start gap-4">
+                          <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <MessageSquare className="w-5 h-5 text-orange-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900 mb-1">Support Tickets</h3>
+                            <p className="text-sm text-gray-600">Get help from our expert support team</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  <Link href="/dashboard/notifications">
+                    <Card className="hover:shadow-lg transition-all hover:border-[#EF4444] cursor-pointer h-full">
+                      <CardContent className="p-5">
+                        <div className="flex items-start gap-4">
+                          <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <Bell className="w-5 h-5 text-red-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900 mb-1">Notifications</h3>
+                            <p className="text-sm text-gray-600">Stay updated with filing and payment alerts</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  <Link href="/dashboard/settings">
+                    <Card className="hover:shadow-lg transition-all hover:border-[#6366F1] cursor-pointer h-full">
+                      <CardContent className="p-5">
+                        <div className="flex items-start gap-4">
+                          <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <Shield className="w-5 h-5 text-indigo-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900 mb-1">Settings</h3>
+                            <p className="text-sm text-gray-600">Configure security, notifications, and preferences</p>
+                          </div>
+                        </div>
                       </CardContent>
                     </Card>
                   </Link>

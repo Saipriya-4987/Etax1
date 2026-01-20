@@ -11,6 +11,8 @@ interface User {
   status: string
   image?: string | null
   phone?: string | null
+  emailVerified?: Date | null
+  createdAt?: Date
 }
 
 interface AuthContextType {
