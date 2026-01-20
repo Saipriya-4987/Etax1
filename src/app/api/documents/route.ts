@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 import { writeFile, mkdir } from 'fs/promises'
 import path from 'path'
 import { v4 as uuidv4 } from 'uuid'
 
-const prisma = new PrismaClient()
+// Force dynamic rendering to avoid build-time database access
+export const dynamic = 'force-dynamic'
 
 // Document upload validation schema
 const documentUploadSchema = z.object({
@@ -129,7 +130,7 @@ export async function GET(request: NextRequest) {
     console.error('Documents API Error:', error)
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { success: false, message: 'Invalid query parameters', errors: error.errors },
+        { success: false, message: 'Invalid query parameters', errors: error.issues },
         { status: 400 }
       )
     }
@@ -236,7 +237,7 @@ export async function POST(request: NextRequest) {
     console.error('Document Upload Error:', error)
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { success: false, message: 'Invalid document data', errors: error.errors },
+        { success: false, message: 'Invalid document data', errors: error.issues },
         { status: 400 }
       )
     }

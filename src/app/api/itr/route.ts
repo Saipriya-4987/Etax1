@@ -3,6 +3,8 @@ import { getCurrentUser } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { itrFilingSchema } from '@/lib/validations'
 
+export const dynamic = 'force-dynamic'
+
 // Get user's ITR filings
 export async function GET(request: NextRequest) {
   try {
@@ -130,7 +132,7 @@ export async function POST(request: NextRequest) {
           assessmentYear: filing.assessmentYear,
           itrType: filing.itrType,
           status: filing.status,
-          totalIncome: filing.totalIncome,
+          grossIncome: filing.grossIncome,
           taxPayable: filing.taxPayable,
         }
       },

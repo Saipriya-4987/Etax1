@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 // Get user dashboard data
 export async function GET() {
   try {
@@ -40,13 +42,13 @@ export async function GET() {
       prisma.iTRFiling.count({
         where: { 
           userId: user.id,
-          status: { in: ['DRAFT', 'SUBMITTED', 'IN_PROGRESS', 'REVISION_REQUIRED'] }
+          status: { in: ['DRAFT', 'DOCUMENTS_PENDING', 'UNDER_REVIEW', 'PROCESSING'] }
         }
       }),
       prisma.gSTFiling.count({
         where: { 
           userId: user.id,
-          status: { in: ['DRAFT', 'SUBMITTED', 'IN_PROGRESS', 'REVISION_REQUIRED'] }
+          status: { in: ['DRAFT', 'DOCUMENTS_PENDING', 'UNDER_REVIEW', 'PROCESSING'] }
         }
       }),
     ])
@@ -61,7 +63,7 @@ export async function GET() {
         assessmentYear: true,
         itrType: true,
         status: true,
-        totalIncome: true,
+        grossIncome: true,
         taxPayable: true,
         createdAt: true,
       },
@@ -77,7 +79,7 @@ export async function GET() {
         returnType: true,
         period: true,
         status: true,
-        netTaxPayable: true,
+        taxPayable: true,
         createdAt: true,
       },
     })

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 // Get user's GST filings
 export async function GET(request: NextRequest) {
   try {
@@ -22,7 +24,7 @@ export async function GET(request: NextRequest) {
       where: {
         userId: user.id,
         ...(status && { status: status as any }),
-        ...(returnType && { returnType }),
+        ...(returnType && { returnType: returnType as any }),
       },
       orderBy: { createdAt: 'desc' },
     })

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { 
@@ -30,7 +30,7 @@ const periods = [
   'Oct-2024', 'Nov-2024', 'Dec-2024', 'Jan-2025', 'Feb-2025', 'Mar-2025',
 ]
 
-export default function NewGSTFilingPage() {
+function NewGSTFilingContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user } = useAuth()
@@ -690,5 +690,17 @@ export default function NewGSTFilingPage() {
         </form>
       </div>
     </div>
+  )
+}
+
+export default function NewGSTFilingPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#1E3A8A]"></div>
+      </div>
+    }>
+      <NewGSTFilingContent />
+    </Suspense>
   )
 }

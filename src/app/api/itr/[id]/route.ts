@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 // Get specific ITR filing
 export async function GET(
   request: NextRequest,
@@ -139,7 +141,7 @@ export async function PATCH(
       await prisma.activityLog.create({
         data: {
           userId: user.id,
-          action: body.submitForReview ? 'ITR_UPDATE' : 'ITR_UPDATE',
+          action: body.submitForReview ? 'ITR_SUBMIT' : 'ITR_CREATE',
           description: body.submitForReview 
             ? `Submitted ITR filing for AY ${filing.assessmentYear}` 
             : `Updated ITR filing for AY ${filing.assessmentYear}`,

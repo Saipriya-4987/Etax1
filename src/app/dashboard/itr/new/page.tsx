@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { 
@@ -24,7 +24,7 @@ const assessmentYears = [
   '2024-25', '2023-24', '2022-23', '2021-22', '2020-21'
 ]
 
-export default function NewITRFilingPage() {
+function NewITRFilingContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user } = useAuth()
@@ -638,5 +638,17 @@ export default function NewITRFilingPage() {
         </form>
       </div>
     </div>
+  )
+}
+
+export default function NewITRFilingPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#1E3A8A]"></div>
+      </div>
+    }>
+      <NewITRFilingContent />
+    </Suspense>
   )
 }

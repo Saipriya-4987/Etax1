@@ -192,7 +192,7 @@ export default function DocumentsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 py-12">
+      <div className="min-h-screen bg-linear-to-br from-purple-50 to-indigo-50 py-12">
         <div className="container mx-auto px-4 max-w-7xl text-center py-24">
           <RefreshCw className="w-12 h-12 animate-spin text-purple-500 mx-auto mb-4" />
           <p className="text-gray-600">Loading documents...</p>
@@ -202,7 +202,7 @@ export default function DocumentsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 py-8">
+    <div className="min-h-screen bg-linear-to-br from-purple-50 to-indigo-50 py-8">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">

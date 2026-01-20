@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 import { unlink, readFile } from 'fs/promises'
 // import path from 'path'
 
-const prisma = new PrismaClient()
+// Force dynamic rendering to avoid build-time database access
+export const dynamic = 'force-dynamic'
 
 // Mock user ID for development - replace with real auth
 const MOCK_USER_ID = 'user_123'
@@ -148,7 +149,7 @@ export async function PATCH(
     console.error('Document UPDATE Error:', error)
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { success: false, message: 'Invalid update data', errors: error.errors },
+        { success: false, message: 'Invalid update data', errors: error.issues },
         { status: 400 }
       )
     }
