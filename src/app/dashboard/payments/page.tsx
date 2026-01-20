@@ -1,70 +1,78 @@
 'use client'
 
-import { useState } from 'react'
-import { CreditCard, Download, Search, Filter, CheckCircle, Clock, XCircle, Calendar, FileText, ExternalLink } from 'lucide-react'
-import { Button, Card, CardContent, Input } from '@/components/ui'
+import { useState, useEffect } from 'react'
+import { CreditCard, Download, Search, CheckCircle, Clock, XCircle, Calendar, FileText, Loader2 } from 'lucide-react'
+import { Button, Card, CardContent } from '@/components/ui'
 
 interface Payment {
   id: string
-  orderId: string
-  service: string
   amount: number
-  status: 'completed' | 'pending' | 'failed'
-  method: string
-  date: string
-  invoiceUrl?: string
+  status: 'PENDING' | 'COMPLETED' | 'FAILED'
+  serviceType: string
+  serviceName: string
+  description: string | null
+  gatewayId: string | null
+  invoiceNumber: string | null
+  invoiceUrl: string | null
+  createdAt: string
+  updatedAt: string
+  completedAt: string | null
+  user?: {
+    id: string
+    name: string
+    email: string
+  }
+}
+
+interface PaymentStats {
+  totalPayments: number
+  totalAmount: number
+  successfulPayments: number
+  successfulAmount: number
 }
 
 export default function PaymentsPage() {
-  const [payments] = useState<Payment[]>([
-    {
-      id: '1',
-      orderId: 'ORD-2024-001',
-      service: 'ITR Filing - Salaried',
-      amount: 999,
-      status: 'completed',
-      method: 'Credit Card',
-      date: '2024-01-15',
-      invoiceUrl: '/invoices/1',
-    },
-    {
-      id: '2',
-      orderId: 'ORD-2024-002',
-      service: 'GST Filing - Monthly',
-      amount: 2499,
-      status: 'completed',
-      method: 'UPI',
-      date: '2024-01-10',
-      invoiceUrl: '/invoices/2',
-    },
-    {
-      id: '3',
-      orderId: 'ORD-2024-003',
-      service: 'CA Consultation',
-      amount: 1499,
-      status: 'pending',
-      method: 'Pending',
-      date: '2024-01-18',
-    },
-  ])
+  const [payments, setPayments] = useState<Payment[]>([])
+  const [stats, setStats] = useState<PaymentStats | null>(null)
+  const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
-  const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'pending' | 'failed'>('all')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'COMPLETED' | 'PENDING' | 'FAILED'>('all')
+
+  useEffect(() => {
+    fetchPayments()
+  }, [])
+
+  const fetchPayments = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/payments')
+      if (!response.ok) throw new Error('Failed to fetch payments')
+      const data = await response.json()
+      setPayments(data.payments || [])
+      setStats(data.stats || null)
+    } catch (error) {
+      console.error('Error fetching payments:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const getStatusBadge = (status: string) => {
-    const styles = {
+    const normalizedStatus = status.toLowerCase()
+    const styles: Record<string, string> = {
       completed: 'bg-green-100 text-green-700 border-green-200',
       pending: 'bg-yellow-100 text-yellow-700 border-yellow-200',
       failed: 'bg-red-100 text-red-700 border-red-200',
     }
-    const icons = {
+    const icons: Record<string, React.ReactNode> = {
       completed: <CheckCircle className="w-3 h-3" />,
       pending: <Clock className="w-3 h-3" />,
       failed: <XCircle className="w-3 h-3" />,
     }
     return (
-      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border ${styles[status as keyof typeof styles]}`}>
-        {icons[status as keyof typeof icons]}
-        {status.charAt(0).toUpperCase() + status.slice(1)}
+      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border ${styles[normalizedStatus] || styles.pending}`}>
+        {icons[normalizedStatus] || icons.pending}
+        {status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()}
       </span>
     )
   }
@@ -72,13 +80,18 @@ export default function PaymentsPage() {
   const filteredPayments = payments
     .filter(p => statusFilter === 'all' || p.status === statusFilter)
     .filter(p => 
-      p.orderId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.service.toLowerCase().includes(searchTerm.toLowerCase())
+      p.serviceName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.gatewayId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.invoiceNumber?.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
-  const totalSpent = payments
-    .filter(p => p.status === 'completed')
-    .reduce((sum, p) => sum + p.amount, 0)
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#1E3A8A]" />
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -96,7 +109,7 @@ export default function PaymentsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Total Spent</p>
-                  <p className="text-2xl font-bold text-gray-900">₹{totalSpent.toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-gray-900">₹{(stats?.successfulAmount || 0).toLocaleString()}</p>
                 </div>
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                   <CreditCard className="w-6 h-6 text-green-600" />
@@ -110,7 +123,7 @@ export default function PaymentsPage() {
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Completed</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {payments.filter(p => p.status === 'completed').length}
+                    {payments.filter(p => p.status === 'COMPLETED').length}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -125,7 +138,7 @@ export default function PaymentsPage() {
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Pending</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {payments.filter(p => p.status === 'pending').length}
+                    {payments.filter(p => p.status === 'PENDING').length}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
@@ -136,7 +149,7 @@ export default function PaymentsPage() {
           </Card>
         </div>
 
-        {/* Stripe Integration Notice */}
+        {/* Payment System Notice */}
         <Card className="mb-6 border-l-4 border-l-blue-500">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
@@ -144,11 +157,10 @@ export default function PaymentsPage() {
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">Payment System Ready</h3>
                 <p className="text-sm text-gray-600">
-                  Payment integration with Stripe is ready. Once you provide your Stripe keys, users will be able to make payments directly through this platform.
+                  Payment integration with Razorpay is configured. Once you provide your Razorpay keys in .env, users will be able to make payments directly through this platform.
                 </p>
                 <div className="mt-3 flex gap-3">
                   <Button size="sm" disabled>
-                    <ExternalLink className="w-4 h-4 mr-2" />
                     Add Payment Method (Coming Soon)
                   </Button>
                 </div>
@@ -182,23 +194,23 @@ export default function PaymentsPage() {
                   All
                 </Button>
                 <Button
-                  variant={statusFilter === 'completed' ? 'primary' : 'outline'}
+                  variant={statusFilter === 'COMPLETED' ? 'primary' : 'outline'}
                   size="sm"
-                  onClick={() => setStatusFilter('completed')}
+                  onClick={() => setStatusFilter('COMPLETED')}
                 >
                   Completed
                 </Button>
                 <Button
-                  variant={statusFilter === 'pending' ? 'primary' : 'outline'}
+                  variant={statusFilter === 'PENDING' ? 'primary' : 'outline'}
                   size="sm"
-                  onClick={() => setStatusFilter('pending')}
+                  onClick={() => setStatusFilter('PENDING')}
                 >
                   Pending
                 </Button>
                 <Button
-                  variant={statusFilter === 'failed' ? 'primary' : 'outline'}
+                  variant={statusFilter === 'FAILED' ? 'primary' : 'outline'}
                   size="sm"
-                  onClick={() => setStatusFilter('failed')}
+                  onClick={() => setStatusFilter('FAILED')}
                 >
                   Failed
                 </Button>
@@ -251,11 +263,11 @@ export default function PaymentsPage() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-2">
                             <FileText className="w-4 h-4 text-gray-400" />
-                            <span className="text-sm font-medium text-gray-900">{payment.orderId}</span>
+                            <span className="text-sm font-medium text-gray-900">{payment.gatewayId || payment.invoiceNumber || payment.id.slice(0, 8)}</span>
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-gray-900">{payment.service}</span>
+                          <span className="text-sm text-gray-900">{payment.serviceName}</span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="text-sm font-semibold text-gray-900">
@@ -266,21 +278,21 @@ export default function PaymentsPage() {
                           {getStatusBadge(payment.status)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-600">{payment.method}</span>
+                          <span className="text-sm text-gray-600">Razorpay</span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-1 text-sm text-gray-600">
                             <Calendar className="w-4 h-4" />
-                            {new Date(payment.date).toLocaleDateString('en-IN')}
+                            {new Date(payment.createdAt).toLocaleDateString('en-IN')}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {payment.status === 'completed' && payment.invoiceUrl ? (
+                          {payment.status === 'COMPLETED' && payment.invoiceUrl ? (
                             <Button variant="outline" size="sm">
                               <Download className="w-4 h-4 mr-2" />
                               Invoice
                             </Button>
-                          ) : payment.status === 'pending' ? (
+                          ) : payment.status === 'PENDING' ? (
                             <Button size="sm" disabled>
                               Pay Now (Soon)
                             </Button>

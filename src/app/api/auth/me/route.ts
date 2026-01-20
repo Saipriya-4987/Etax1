@@ -9,16 +9,16 @@ export async function GET() {
     
     if (!user) {
       return NextResponse.json(
-        { error: 'Not authenticated' },
+        { success: false, error: 'Not authenticated' },
         { status: 401 }
       )
     }
     
-    return NextResponse.json({ user }, { status: 200 })
-  } catch (error) {
+    return NextResponse.json({ success: true, user }, { status: 200 })
+  } catch (error: any) {
     console.error('Get user error:', error)
     return NextResponse.json(
-      { error: 'Failed to get user' },
+      { success: false, error: error?.message || 'Failed to get user' },
       { status: 500 }
     )
   }

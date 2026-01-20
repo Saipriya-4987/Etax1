@@ -1,67 +1,72 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Bell, CheckCheck, Trash2, Filter, FileText, CreditCard, AlertCircle, Info, Clock } from 'lucide-react'
+import { Bell, CheckCheck, Trash2, Filter, FileText, CreditCard, AlertCircle, Info, Clock, Loader2 } from 'lucide-react'
 import { Button, Card, CardContent } from '@/components/ui'
 
 interface Notification {
   id: string
-  type: 'filing' | 'payment' | 'alert' | 'info'
+  type: string
   title: string
   message: string
-  timestamp: string
-  read: boolean
+  createdAt: string
+  isRead: boolean
+  data?: string
 }
 
 export default function NotificationsPage() {
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: '1',
-      type: 'filing',
-      title: 'ITR Filing Update',
-      message: 'Your ITR filing for FY 2023-24 has been submitted successfully.',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-      read: false,
-    },
-    {
-      id: '2',
-      type: 'payment',
-      title: 'Payment Received',
-      message: 'Payment of ₹2,499 received for GST filing service.',
-      timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
-      read: false,
-    },
-    {
-      id: '3',
-      type: 'alert',
-      title: 'Document Required',
-      message: 'Please upload Form 16 to complete your ITR filing.',
-      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-      read: true,
-    },
-    {
-      id: '4',
-      type: 'info',
-      title: 'Tax Deadline Reminder',
-      message: 'ITR filing deadline is 31st July 2024. File now to avoid penalties.',
-      timestamp: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(),
-      read: true,
-    },
-  ])
+  const [notifications, setNotifications] = useState<Notification[]>([])
+  const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<'all' | 'unread'>('all')
 
-  const unreadCount = notifications.filter(n => !n.read).length
+  useEffect(() => {
+    fetchNotifications()
+  }, [])
 
-  const markAsRead = (id: string) => {
-    setNotifications(prev =>
-      prev.map(n => (n.id === id ? { ...n, read: true } : n))
-    )
+  const fetchNotifications = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/notifications')
+      if (!response.ok) throw new Error('Failed to fetch notifications')
+      const data = await response.json()
+      setNotifications(data.notifications || [])
+    } catch (error) {
+      console.error('Error fetching notifications:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const markAllAsRead = () => {
-    setNotifications(prev =>
-      prev.map(n => ({ ...n, read: true }))
-    )
+  const unreadCount = notifications.filter(n => !n.isRead).length
+
+  const markAsRead = async (id: string) => {
+    try {
+      await fetch('/api/notifications/mark-read', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ notificationId: id }),
+      })
+      setNotifications(prev =>
+        prev.map(n => (n.id === id ? { ...n, isRead: true } : n))
+      )
+    } catch (error) {
+      console.error('Error marking as read:', error)
+    }
+  }
+
+  const markAllAsRead = async () => {
+    try {
+      await fetch('/api/notifications/mark-read', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ markAll: true }),
+      })
+      setNotifications(prev =>
+        prev.map(n => ({ ...n, isRead: true }))
+      )
+    } catch (error) {
+      console.error('Error marking all as read:', error)
+    }
   }
 
   const deleteNotification = (id: string) => {
@@ -70,14 +75,15 @@ export default function NotificationsPage() {
 
   const getIcon = (type: string) => {
     switch (type) {
-      case 'filing':
+      case 'FILING_UPDATE':
         return <FileText className="w-5 h-5 text-blue-600" />
-      case 'payment':
+      case 'PAYMENT_UPDATE':
         return <CreditCard className="w-5 h-5 text-green-600" />
-      case 'alert':
+      case 'DOCUMENT_REQUEST':
         return <AlertCircle className="w-5 h-5 text-red-600" />
-      case 'info':
-        return <Info className="w-5 h-5 text-gray-600" />
+      case 'TICKET_UPDATE':
+        return <Info className="w-5 h-5 text-purple-600" />
+      case 'GENERAL':
       default:
         return <Bell className="w-5 h-5 text-gray-600" />
     }
@@ -97,9 +103,17 @@ export default function NotificationsPage() {
     return date.toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })
   }
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#1E3A8A]" />
+      </div>
+    )
+  }
+
   const filteredNotifications = filter === 'all' 
     ? notifications 
-    : notifications.filter(n => !n.read)
+    : notifications.filter(n => !n.isRead)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -166,7 +180,7 @@ export default function NotificationsPage() {
               <Card
                 key={notification.id}
                 className={`transition-all hover:shadow-md ${
-                  !notification.read ? 'bg-blue-50 border-l-4 border-l-[#1E3A8A]' : ''
+                  !notification.isRead ? 'bg-blue-50 border-l-4 border-l-[#1E3A8A]' : ''
                 }`}
               >
                 <CardContent className="p-4">
@@ -180,7 +194,7 @@ export default function NotificationsPage() {
                           {notification.title}
                         </h3>
                         <div className="flex items-center gap-2 flex-shrink-0">
-                          {!notification.read && (
+                          {!notification.isRead && (
                             <button
                               onClick={() => markAsRead(notification.id)}
                               className="text-[#1E3A8A] hover:text-[#3B82F6] text-sm font-medium"
@@ -203,7 +217,7 @@ export default function NotificationsPage() {
                       </p>
                       <div className="flex items-center gap-1 text-xs text-gray-500">
                         <Clock className="w-3 h-3" />
-                        <span>{formatTime(notification.timestamp)}</span>
+                        <span>{formatTime(notification.createdAt)}</span>
                       </div>
                     </div>
                   </div>

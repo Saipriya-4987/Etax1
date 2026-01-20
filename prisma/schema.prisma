@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -50,6 +51,11 @@ model User {
   
   // Section-wise access
   accessPermissions AccessPermission[]
+  
+  // New relationships
+  tickets           Ticket[]
+  notifications     Notification[]
+  caProfile         CAProfile?
   
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
@@ -523,4 +529,247 @@ model FAQ {
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// ==================== SUPPORT TICKETS ====================
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_FOR_CUSTOMER
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TicketCategory {
+  GENERAL
+  TECHNICAL
+  BILLING
+  ITR_FILING
+  GST_FILING
+  DOCUMENT
+  REFUND
+  OTHER
+}
+
+model Ticket {
+  id          String          @id @default(cuid())
+  ticketNo    String          @unique @default(cuid())
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  subject     String
+  description String          @db.Text
+  category    TicketCategory  @default(GENERAL)
+  priority    TicketPriority  @default(MEDIUM)
+  status      TicketStatus    @default(OPEN)
+  
+  // Assignment
+  assignedTo  String?
+  
+  // Resolution
+  resolvedAt  DateTime?
+  resolution  String?         @db.Text
+  
+  // Relationships
+  messages    TicketMessage[]
+  
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+  @@index([ticketNo])
+}
+
+model TicketMessage {
+  id          String   @id @default(cuid())
+  ticketId    String
+  ticket      Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  
+  senderId    String
+  senderType  String   // USER, ADMIN, CA_EXPERT, SYSTEM
+  message     String   @db.Text
+  attachments String[]
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([ticketId])
+}
+
+// ==================== NOTIFICATIONS ====================
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+  FILING_UPDATE
+  PAYMENT
+  DOCUMENT
+  TICKET
+  SYSTEM
+}
+
+model Notification {
+  id          String           @id @default(cuid())
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  title       String
+  message     String           @db.Text
+  type        NotificationType @default(INFO)
+  
+  // Link to related entity
+  entityType  String?          // FILING, PAYMENT, TICKET, DOCUMENT
+  entityId    String?
+  actionUrl   String?
+  
+  isRead      Boolean          @default(false)
+  readAt      DateTime?
+  
+  createdAt   DateTime         @default(now())
+  
+  @@index([userId])
+  @@index([isRead])
+}
+
+// ==================== CA EXPERT PROFILE ====================
+
+model CAProfile {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Professional Info
+  membershipNumber  String?  @unique  // ICAI Membership Number
+  qualification     String?
+  experience        Int      @default(0)  // Years of experience
+  specializations   String[]
+  bio               String?  @db.Text
+  
+  // Practice Details
+  firmName          String?
+  firmAddress       String?
+  
+  // Ratings & Reviews
+  rating            Float    @default(0)
+  totalReviews      Int      @default(0)
+  totalClients      Int      @default(0)
+  completedFilings  Int      @default(0)
+  
+  // Availability
+  isAvailable       Boolean  @default(true)
+  maxActiveClients  Int      @default(50)
+  
+  // Commission Settings
+  commissionRate    Float    @default(70)  // Percentage CA earns
+  
+  // Verification
+  isVerified        Boolean  @default(false)
+  verifiedAt        DateTime?
+  verifiedBy        String?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// ==================== CA APPOINTMENTS ====================
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+model Appointment {
+  id            String            @id @default(cuid())
+  
+  // Participants
+  caId          String
+  clientId      String
+  
+  // Schedule
+  scheduledAt   DateTime
+  duration      Int               @default(30)  // Minutes
+  
+  // Details
+  purpose       String
+  notes         String?           @db.Text
+  meetingLink   String?           // For video calls
+  
+  status        AppointmentStatus @default(SCHEDULED)
+  
+  // Completion
+  completedAt   DateTime?
+  summary       String?           @db.Text
+  
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  
+  @@index([caId])
+  @@index([clientId])
+  @@index([scheduledAt])
+}
+
+// ==================== CA EARNINGS ====================
+
+enum EarningStatus {
+  PENDING
+  APPROVED
+  PAID
+  CANCELLED
+}
+
+model CAEarning {
+  id            String        @id @default(cuid())
+  caId          String
+  
+  // Source
+  filingType    String        // ITR, GST
+  filingId      String
+  clientId      String
+  
+  // Amounts
+  serviceAmount Float         // Total service charge
+  commission    Float         // CA's share
+  platformFee   Float         // Platform's share
+  
+  status        EarningStatus @default(PENDING)
+  
+  // Payment
+  paidAt        DateTime?
+  paymentRef    String?
+  
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  @@index([caId])
+  @@index([status])
+}
+
+// ==================== PLATFORM SETTINGS ====================
+
+model PlatformSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String   @db.Text
+  type        String   @default("string")  // string, number, boolean, json
+  category    String   @default("general")
+  description String?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([category])
 }

@@ -2,15 +2,26 @@
 
 /* eTaxMentor Theme Colors */
 :root {
-  /* Primary Colors */
+  /* Primary Colors as blues */
   --primary: #1E3A8A;
   --primary-light: #3B82F6;
   --primary-dark: #1E40AF;
   
-  /* Secondary Colors */
-  --secondary: #10B981;
+    /* Primary Colors as greens */
+  /* --primary: #10B981;
+  --primary-light: #34D399;
+  --primary-dark: #059669; */
+  
+  
+ /* Secondary Colors as greens */
+   --secondary: #10B981;
   --secondary-light: #34D399;
-  --secondary-dark: #059669;
+  --secondary-dark: #059669; 
+
+  /* Secondary Colors as blues */
+  /* --secondary: #3B82F6;
+  --secondary-light: #60A5FA;
+  --secondary-dark: #2563EB; */
   
   /* Accent Colors */
   --accent-orange: #F97316;

@@ -37,6 +37,36 @@ export async function verifyToken(token: string) {
   }
 }
 
+// Helper to verify token from Request object (for API routes)
+export async function verifyRequestToken(request: Request) {
+  try {
+    // Try to get token from Authorization header
+    const authHeader = request.headers.get('authorization')
+    let token = authHeader?.replace('Bearer ', '')
+    
+    // If not in header, try to get from cookies
+    if (!token) {
+      const cookieHeader = request.headers.get('cookie')
+      if (cookieHeader) {
+        const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
+          const [key, value] = cookie.trim().split('=')
+          acc[key] = value
+          return acc
+        }, {} as Record<string, string>)
+        token = cookies['auth-token']
+      }
+    }
+    
+    if (!token) {
+      return null
+    }
+    
+    return await verifyToken(token)
+  } catch {
+    return null
+  }
+}
+
 // Session management
 export async function createSession(userId: string, request?: NextRequest) {
   const sessionToken = crypto.randomUUID()
@@ -81,30 +111,35 @@ export async function deleteSession(sessionToken: string) {
 
 // Get current user from cookies
 export async function getCurrentUser() {
-  const cookieStore = await cookies()
-  const token = cookieStore.get('auth-token')?.value
+  try {
+    const cookieStore = await cookies()
+    const token = cookieStore.get('auth-token')?.value
 
-  if (!token) return null
+    if (!token) return null
 
-  const payload = await verifyToken(token)
-  if (!payload) return null
+    const payload = await verifyToken(token)
+    if (!payload) return null
 
-  const user = await prisma.user.findUnique({
-    where: { id: payload.userId },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      role: true,
-      status: true,
-      image: true,
-      phone: true,
-      emailVerified: true,
-      createdAt: true,
-    },
-  })
+    const user = await prisma.user.findUnique({
+      where: { id: payload.userId },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        status: true,
+        image: true,
+        phone: true,
+        emailVerified: true,
+        createdAt: true,
+      },
+    })
 
-  return user
+    return user
+  } catch (error) {
+    console.error('getCurrentUser error:', error)
+    return null
+  }
 }
 
 // Register new user

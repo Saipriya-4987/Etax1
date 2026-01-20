@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { MessageSquare, Plus, Search, Filter, Clock, CheckCircle, XCircle, MessageCircle, Send, Paperclip, ChevronLeft } from 'lucide-react'
+import { MessageSquare, Plus, Search, Filter, Clock, CheckCircle, XCircle, MessageCircle, Send, Paperclip, ChevronLeft, Loader2 } from 'lucide-react'
 import { Button, Card, CardContent, Input } from '@/components/ui'
 import { useAuth } from '@/contexts'
 
@@ -9,140 +9,157 @@ interface Ticket {
   id: string
   subject: string
   category: string
-  status: 'open' | 'in-progress' | 'resolved' | 'closed'
-  priority: 'low' | 'medium' | 'high'
+  status: 'OPEN' | 'IN_PROGRESS' | 'RESOLVED' | 'CLOSED'
+  priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
   createdAt: string
   lastReply: string
   messages: Message[]
+  user?: {
+    name: string
+    email: string
+  }
 }
 
 interface Message {
   id: string
-  sender: 'user' | 'support'
+  senderId: string
+  senderType: 'USER' | 'ADMIN' | 'CA_EXPERT'
   message: string
-  timestamp: string
+  createdAt: string
 }
 
 export default function TicketsPage() {
   const { user } = useAuth()
-  const [tickets, setTickets] = useState<Ticket[]>([
-    {
-      id: 'TKT-001',
-      subject: 'Issue with ITR filing submission',
-      category: 'ITR Filing',
-      status: 'in-progress',
-      priority: 'high',
-      createdAt: '2024-01-15T10:30:00',
-      lastReply: '2024-01-15T14:20:00',
-      messages: [
-        { id: '1', sender: 'user', message: 'I am unable to submit my ITR filing. Getting an error.', timestamp: '2024-01-15T10:30:00' },
-        { id: '2', sender: 'support', message: 'We are looking into this issue. Can you please share the error screenshot?', timestamp: '2024-01-15T14:20:00' },
-      ],
-    },
-    {
-      id: 'TKT-002',
-      subject: 'Need help with GST calculation',
-      category: 'GST Filing',
-      status: 'resolved',
-      priority: 'medium',
-      createdAt: '2024-01-10T09:15:00',
-      lastReply: '2024-01-11T16:45:00',
-      messages: [
-        { id: '1', sender: 'user', message: 'How do I calculate CGST and SGST?', timestamp: '2024-01-10T09:15:00' },
-        { id: '2', sender: 'support', message: 'CGST and SGST are each 50% of the total GST rate. For example, if GST is 18%, then CGST = 9% and SGST = 9%.', timestamp: '2024-01-11T16:45:00' },
-      ],
-    },
-  ])
+  const [tickets, setTickets] = useState<Ticket[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null)
   const [newMessage, setNewMessage] = useState('')
   const [showNewTicket, setShowNewTicket] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const [newTicket, setNewTicket] = useState({
     subject: '',
-    category: 'General',
-    priority: 'medium',
+    category: 'GENERAL',
+    priority: 'MEDIUM',
     message: '',
   })
 
+  // Fetch tickets from API
+  useEffect(() => {
+    fetchTickets()
+  }, [])
+
+  const fetchTickets = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/tickets')
+      if (!response.ok) throw new Error('Failed to fetch tickets')
+      const data = await response.json()
+      setTickets(data.tickets || [])
+    } catch (err) {
+      setError('Failed to load tickets')
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchTicketDetails = async (ticketId: string) => {
+    try {
+      const response = await fetch(`/api/tickets/${ticketId}`)
+      if (!response.ok) throw new Error('Failed to fetch ticket')
+      const data = await response.json()
+      setSelectedTicket(data.ticket)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   const getStatusBadge = (status: string) => {
-    const styles = {
+    const normalizedStatus = status.toLowerCase().replace('_', '-')
+    const styles: Record<string, string> = {
       open: 'bg-blue-100 text-blue-700 border-blue-200',
       'in-progress': 'bg-yellow-100 text-yellow-700 border-yellow-200',
       resolved: 'bg-green-100 text-green-700 border-green-200',
       closed: 'bg-gray-100 text-gray-700 border-gray-200',
     }
-    const icons = {
+    const icons: Record<string, React.ReactNode> = {
       open: <Clock className="w-3 h-3" />,
       'in-progress': <MessageCircle className="w-3 h-3" />,
       resolved: <CheckCircle className="w-3 h-3" />,
       closed: <XCircle className="w-3 h-3" />,
     }
     return (
-      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border ${styles[status as keyof typeof styles]}`}>
-        {icons[status as keyof typeof icons]}
-        {status.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border ${styles[normalizedStatus] || styles.open}`}>
+        {icons[normalizedStatus] || icons.open}
+        {status.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
       </span>
     )
   }
 
   const getPriorityColor = (priority: string) => {
-    const colors = {
+    const colors: Record<string, string> = {
       low: 'text-gray-500',
       medium: 'text-yellow-600',
       high: 'text-red-600',
+      urgent: 'text-red-700 font-bold',
     }
-    return colors[priority as keyof typeof colors]
+    return colors[priority.toLowerCase()] || colors.medium
   }
 
-  const handleSendMessage = () => {
-    if (!newMessage.trim() || !selectedTicket) return
+  const handleSendMessage = async () => {
+    if (!newMessage.trim() || !selectedTicket || submitting) return
 
-    const message: Message = {
-      id: Date.now().toString(),
-      sender: 'user',
-      message: newMessage,
-      timestamp: new Date().toISOString(),
+    setSubmitting(true)
+    try {
+      const response = await fetch(`/api/tickets/${selectedTicket.id}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: newMessage }),
+      })
+      
+      if (!response.ok) throw new Error('Failed to send message')
+      
+      // Refresh ticket details
+      await fetchTicketDetails(selectedTicket.id)
+      setNewMessage('')
+    } catch (err) {
+      console.error(err)
+      alert('Failed to send message')
+    } finally {
+      setSubmitting(false)
     }
-
-    setTickets(prev =>
-      prev.map(t =>
-        t.id === selectedTicket.id
-          ? { ...t, messages: [...t.messages, message], lastReply: message.timestamp }
-          : t
-      )
-    )
-
-    setSelectedTicket(prev =>
-      prev ? { ...prev, messages: [...prev.messages, message] } : null
-    )
-
-    setNewMessage('')
   }
 
-  const handleCreateTicket = () => {
-    if (!newTicket.subject.trim() || !newTicket.message.trim()) return
+  const handleCreateTicket = async () => {
+    if (!newTicket.subject.trim() || !newTicket.message.trim() || submitting) return
 
-    const ticket: Ticket = {
-      id: `TKT-${String(tickets.length + 1).padStart(3, '0')}`,
-      subject: newTicket.subject,
-      category: newTicket.category,
-      status: 'open',
-      priority: newTicket.priority as 'low' | 'medium' | 'high',
-      createdAt: new Date().toISOString(),
-      lastReply: new Date().toISOString(),
-      messages: [
-        {
-          id: '1',
-          sender: 'user',
-          message: newTicket.message,
-          timestamp: new Date().toISOString(),
-        },
-      ],
+    setSubmitting(true)
+    try {
+      const response = await fetch('/api/tickets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subject: newTicket.subject,
+          description: newTicket.message,
+          category: newTicket.category,
+          priority: newTicket.priority,
+        }),
+      })
+      
+      if (!response.ok) throw new Error('Failed to create ticket')
+      
+      const data = await response.json()
+      setTickets(prev => [data.ticket, ...prev])
+      setShowNewTicket(false)
+      setNewTicket({ subject: '', category: 'GENERAL', priority: 'MEDIUM', message: '' })
+      await fetchTicketDetails(data.ticket.id)
+    } catch (err) {
+      console.error(err)
+      alert('Failed to create ticket')
+    } finally {
+      setSubmitting(false)
     }
-
-    setTickets(prev => [ticket, ...prev])
-    setShowNewTicket(false)
-    setNewTicket({ subject: '', category: 'General', priority: 'medium', message: '' })
-    setSelectedTicket(ticket)
   }
 
   const formatTime = (timestamp: string) => {
@@ -152,6 +169,14 @@ export default function TicketsPage() {
       hour: '2-digit',
       minute: '2-digit',
     })
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#1E3A8A]" />
+      </div>
+    )
   }
 
   if (showNewTicket) {
@@ -274,30 +299,33 @@ export default function TicketsPage() {
           <Card className="mb-6">
             <CardContent className="p-6">
               <div className="space-y-6 mb-6 max-h-[500px] overflow-y-auto">
-                {selectedTicket.messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div className={`max-w-[70%] ${msg.sender === 'user' ? 'order-2' : 'order-1'}`}>
-                      <div
-                        className={`p-4 rounded-lg ${
-                          msg.sender === 'user'
-                            ? 'bg-[#1E3A8A] text-white'
-                            : 'bg-gray-100 text-gray-900'
-                        }`}
-                      >
-                        <p className="text-sm">{msg.message}</p>
+                {selectedTicket.messages.map((msg) => {
+                  const isUserMessage = msg.senderType === 'USER'
+                  return (
+                    <div
+                      key={msg.id}
+                      className={`flex ${isUserMessage ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div className={`max-w-[70%] ${isUserMessage ? 'order-2' : 'order-1'}`}>
+                        <div
+                          className={`p-4 rounded-lg ${
+                            isUserMessage
+                              ? 'bg-[#1E3A8A] text-white'
+                              : 'bg-gray-100 text-gray-900'
+                          }`}
+                        >
+                          <p className="text-sm">{msg.message}</p>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1 px-2">
+                          {isUserMessage ? 'You' : 'Support'} • {formatTime(msg.createdAt)}
+                        </p>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1 px-2">
-                        {msg.sender === 'user' ? 'You' : 'Support'} • {formatTime(msg.timestamp)}
-                      </p>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
 
-              {selectedTicket.status !== 'closed' && (
+              {selectedTicket.status !== 'CLOSED' && (
                 <div className="flex gap-2 pt-4 border-t">
                   <input
                     type="text"
@@ -344,7 +372,7 @@ export default function TicketsPage() {
             <CardContent className="p-6 text-center">
               <p className="text-sm text-gray-600 mb-1">Open</p>
               <p className="text-3xl font-bold text-blue-600">
-                {tickets.filter(t => t.status === 'open').length}
+                {tickets.filter(t => t.status === 'OPEN').length}
               </p>
             </CardContent>
           </Card>
@@ -352,7 +380,7 @@ export default function TicketsPage() {
             <CardContent className="p-6 text-center">
               <p className="text-sm text-gray-600 mb-1">In Progress</p>
               <p className="text-3xl font-bold text-yellow-600">
-                {tickets.filter(t => t.status === 'in-progress').length}
+                {tickets.filter(t => t.status === 'IN_PROGRESS').length}
               </p>
             </CardContent>
           </Card>
@@ -360,7 +388,7 @@ export default function TicketsPage() {
             <CardContent className="p-6 text-center">
               <p className="text-sm text-gray-600 mb-1">Resolved</p>
               <p className="text-3xl font-bold text-green-600">
-                {tickets.filter(t => t.status === 'resolved').length}
+                {tickets.filter(t => t.status === 'RESOLVED').length}
               </p>
             </CardContent>
           </Card>
