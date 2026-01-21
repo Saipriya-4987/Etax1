@@ -16,7 +16,7 @@ export default function Footer() {
               </div>
               <span className="text-2xl font-bold">eTaxMentor</span>
             </Link>
-            <p className="text-blue-200 text-sm leading-relaxed mb-6">
+            <p className="text-white text-sm leading-relaxed mb-6">
               Our mission is to empower businesses and individuals with seamless, technology-driven 
               financial solutions that simplify compliance, optimize tax strategies, and drive growth.
             </p>
@@ -64,7 +64,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link 
                     href={link.href}
-                    className="text-blue-200 hover:text-white transition-colors text-sm"
+                    className="text-white hover:text-white transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -81,7 +81,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link 
                     href={link.href}
-                    className="text-blue-200 hover:text-white transition-colors text-sm"
+                    className="text-white hover:text-white transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -97,7 +97,7 @@ export default function Footer() {
               <li>
                 <a 
                   href={`tel:${APP_CONFIG.phone}`}
-                  className="flex items-start gap-3 text-blue-200 hover:text-white transition-colors text-sm"
+                  className="flex items-start gap-3 text-white hover:text-white transition-colors text-sm"
                 >
                   <Phone size={18} className="mt-0.5 shrink-0" />
                   <span>{APP_CONFIG.phone}</span>
@@ -106,13 +106,13 @@ export default function Footer() {
               <li>
                 <a 
                   href={`mailto:${APP_CONFIG.email}`}
-                  className="flex items-start gap-3 text-blue-200 hover:text-white transition-colors text-sm"
+                  className="flex items-start gap-3 text-white hover:text-white transition-colors text-sm"
                 >
                   <Mail size={18} className="mt-0.5 shrink-0" />
                   <span>{APP_CONFIG.email}</span>
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-blue-200 text-sm">
+              <li className="flex items-start gap-3 text-white text-sm">
                 <MapPin size={18} className="mt-0.5 shrink-0" />
                 <span>{APP_CONFIG.address}</span>
               </li>
@@ -125,7 +125,7 @@ export default function Footer() {
       <div className="border-t border-blue-800">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-blue-200 text-sm">
+            <p className="text-white text-sm">
               Copyright © {new Date().getFullYear()} eTaxMentor. All Rights Reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
@@ -133,7 +133,7 @@ export default function Footer() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-blue-200 hover:text-white text-sm transition-colors"
+                  className="text-white hover:text-white text-sm transition-colors"
                 >
                   {link.name}
                 </Link>

@@ -34,17 +34,11 @@ const iconMap: Record<string, React.ElementType> = {
 
 export default function HomePage() {
   return (
-    <>
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-linear-to-br from-[#1E3A8A] via-[#1E40AF] to-[#3B82F6] text-white overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-        </div>
-        
+      <section className="relative bg-gradient-to-r from-blue-900 to-blue-700 text-white overflow-hidden">
         <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-5xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
               <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
               <span className="text-sm">Trusted by 10,000+ Happy Clients</span>
@@ -59,24 +53,14 @@ export default function HomePage() {
               with Expert Tax Solutions
             </h1>
             
-            <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Seamless tax compliance powered by AI and expertise. All-in-one platform for 
-              ITR filing, GST, TDS, CFO, and business structuring services.
-            </p>
+            <div className="h-4"></div> {/* Added space */}
+            <div className="h-4"></div> {/* Added space */}
+            <div className="h-4"></div> {/* Added space */}
+            <div className="h-4"></div> {/* Added space */}
+            <div className="h-4"></div> {/* Added space */}
+            <div className="h-4"></div> {/* Added space */}
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
-              <Link href="/services/itr-filing">
-                <Button size="xl" variant="secondary" className="w-full sm:w-auto min-w-55">
-                  Explore Services
-                  <ArrowRight className="w-6 h-6" />
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button size="xl" variant="outline" className="w-full sm:w-auto min-w-55">
-                  Talk to Expert
-                </Button>
-              </Link>
-            </div>
+            
           </div>
         </div>
         
@@ -88,15 +72,43 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Text Section Below Hero */}
+      <section className="bg-white py-12">
+        <p className="text-center">
+
+          Seamless tax compliance powered by AI and expertise. All-in-one platform for 
+          ITR filing, GST, TDS, CFO, and business structuring services.
+          <div className="h-4"></div> {/* Added space */}
+        </p>
+        
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+          <Link href="/services/itr-filing">
+            <Button size="xl" variant="secondary" className="w-full sm:w-auto min-w-55">
+              Explore Services
+              <ArrowRight className="w-6 h-6" />
+            </Button>
+          </Link>
+          <Link href="/contact">
+            <Button size="xl" variant="outline" className="w-full sm:w-auto min-w-55">
+              Talk to Expert
+            </Button>
+          </Link>
+        </div>
+      </section>
+
       {/* File ITR Options */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
+            
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <div className="h-4"></div> {/* Added space */}
               Start Your <span className="text-[#1E3A8A]">Tax Filing</span> Journey
             </h2>
+            <div className="h-4"></div> {/* Added space */}
             <p className="text-lg text-gray-600">Choose your preferred filing method</p>
           </div>
+          <div className="h-4"></div> {/* Added space */}
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Option 1 */}
             <div className="bg-linear-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-10 border border-blue-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
@@ -135,51 +147,66 @@ export default function HomePage() {
         </div>
       </section>
 
+      <div className="h-12 md:h-16"></div> {/* Spacing before Why Choose Us */}
+
       {/* Why Choose Us */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="mb-12">
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center">
+              
               Why Choose <span className="text-[#1E3A8A]">eTaxMentor</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Experience Excellence in Tax Services with over 24 years of expertise
-            </p>
+            <div className="h-4"></div> {/* Added space */}
+            <div className="flex justify-center">
+              <p className="text-lg text-gray-600 max-w-2xl text-center mt-2">
+                Experience Excellence in Tax Services with over 24 years of expertise
+              </p>
+            </div>
+
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto">
-            <div className="text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-[#1E3A8A]" />
+          <div className="h-8"></div> {/* Added space before statistics */}
+          
+          <div className="flex justify-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl">
+              
+              <div className="text-center p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
+                <div className="w-20 h-20 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-10 h-10 text-[#1E3A8A]" />
+                </div>
+                <div className="text-4xl md:text-5xl font-bold text-[#1E3A8A] mb-1">{APP_CONFIG.stats.clients}</div>
+                <div className="text-gray-600 text-lg">Happy Clients</div>
               </div>
-              <div className="text-3xl md:text-4xl font-bold text-[#1E3A8A] mb-1">{APP_CONFIG.stats.clients}</div>
-              <div className="text-gray-600">Happy Clients</div>
-            </div>
-            
-            <div className="text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Award className="w-8 h-8 text-[#10B981]" />
+              
+              <div className="text-center p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
+                <div className="w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-10 h-10 text-[#10B981]" />
+                </div>
+                <div className="text-4xl md:text-5xl font-bold text-[#10B981] mb-1">{APP_CONFIG.stats.yearsExperience}</div>
+                <div className="text-gray-600 text-lg">Years of Expertise</div>
               </div>
-              <div className="text-3xl md:text-4xl font-bold text-[#10B981] mb-1">{APP_CONFIG.stats.yearsExperience}</div>
-              <div className="text-gray-600">Years of Expertise</div>
-            </div>
-            
-            <div className="text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Cpu className="w-8 h-8 text-purple-600" />
+              
+              <div className="text-center p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
+                <div className="w-20 h-20 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Cpu className="w-10 h-10 text-purple-600" />
+                </div>
+                <div className="text-4xl md:text-5xl font-bold text-purple-600 mb-1">AI</div>
+                <div className="text-gray-600 text-lg">Powered Solutions</div>
               </div>
-              <div className="text-3xl md:text-4xl font-bold text-purple-600 mb-1">AI</div>
-              <div className="text-gray-600">Powered Solutions</div>
-            </div>
-            
-            <div className="text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <HeartHandshake className="w-8 h-8 text-orange-500" />
+              
+              <div className="text-center p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
+                <div className="w-20 h-20 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <HeartHandshake className="w-10 h-10 text-orange-500" />
+                </div>
+                <div className="text-4xl md:text-5xl font-bold text-orange-500 mb-1">End-to-End</div>
+                <div className="text-gray-600 text-lg">Support</div>
               </div>
-              <div className="text-3xl md:text-4xl font-bold text-orange-500 mb-1">End-to-End</div>
-              <div className="text-gray-600">Support</div>
             </div>
           </div>
+          
+          <div className="h-8"></div> {/* Added space before Discover button */}
           
           <div className="text-center mt-12">
             <Link href="/about">
@@ -192,6 +219,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <div className="h-8"></div> {/* Added space before Who We Serve section */}
+      
       {/* Who We Serve */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
@@ -199,38 +228,59 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Who We <span className="text-[#1E3A8A]">Serve</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              From salaried individuals and gig workers to fast-growing startups, NGOs, and large enterprises
-            </p>
+            <div className="flex justify-center">
+              <p className="text-lg text-gray-600 max-w-2xl text-center mt-2 whitespace-nowrap">
+                
+  From salaried individuals and gig workers to fast-growing startups, NGOs, and large enterprises
+</p>
+
+            </div>
           </div>
           
-          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
-            {TARGET_AUDIENCE.map((item) => {
-              const Icon = iconMap[item.icon] || Briefcase
-              return (
-                <div 
-                  key={item.title}
-                  className="flex items-center gap-3 px-6 py-4 bg-gray-50 hover:bg-blue-50 rounded-full border border-gray-200 hover:border-blue-200 transition-all cursor-pointer group"
-                >
-                  <Icon className="w-5 h-5 text-gray-500 group-hover:text-[#1E3A8A] transition-colors" />
-                  <span className="font-medium text-gray-700 group-hover:text-[#1E3A8A] transition-colors">{item.title}</span>
-                </div>
-              )
-            })}
-          </div>
+          <div className="h-8"></div> {/* Added space before service tags */}
+          
+          <section className="py-8 flex justify-center"> {/* ✅ added flex + justify-center */}
+            <div className="max-w-5xl mx-auto px-4 text-center"> {/* ✅ added text-center */}
+              <div className="flex flex-wrap justify-center items-center gap-4"> {/* ✅ added items-center */}
+                {TARGET_AUDIENCE.map((item) => {
+                  const Icon = iconMap[item.icon] || Briefcase
+                  return (
+                    <div
+                      key={item.title}
+                      className="flex items-center gap-2 px-5 py-2.5
+                                 bg-white rounded-full border border-gray-300
+                                 hover:bg-blue-50 hover:border-blue-300
+                                 transition-all cursor-pointer group"
+                    >
+                      <Icon className="w-4 h-4 text-gray-600 group-hover:text-[#1E3A8A]" />
+                      <span className="text-sm font-medium text-gray-800 group-hover:text-[#1E3A8A]">
+                        {item.title}
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </section>
         </div>
       </section>
 
+      <div className="h-8"></div> {/* Added space before Services section */}
+      
       {/* Services */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our <span className="text-[#1E3A8A]">Services</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              From Tax Filing to CFO Advisory — We&apos;ve Got You Covered
-            </p>
+            <div className="text-center">
+              <p className="text-center">
+                From Tax Filing to CFO Advisory — We&apos;ve Got You Covered
+              </p>
+            </div>
+            
+            <div className="h-8"></div> {/* Added space after services description */}
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -256,6 +306,8 @@ export default function HomePage() {
             ))}
           </div>
           
+          <div className="h-8"></div> {/* Added space before Explore All Services button */}
+          
           <div className="text-center mt-12">
             <Link href="/services">
               <Button size="lg" variant="primary">
@@ -264,9 +316,14 @@ export default function HomePage() {
               </Button>
             </Link>
           </div>
+          
+          
+          <div className="h-8"></div> {/* Added space after Explore All Services button */}
         </div>
       </section>
 
+      <div className="h-8"></div> {/* Added space before Pricing section */}
+      
       {/* Pricing */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
@@ -274,9 +331,12 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Transparent <span className="text-[#1E3A8A]">Pricing</span> Plans
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-center">
+              <div className="h-8"></div> {/* Added space after pricing description */}
               Choose the plan that fits your needs
             </p>
+            
+            <div className="h-8"></div> {/* Added space after pricing description */}
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -333,14 +393,20 @@ export default function HomePage() {
             ))}
           </div>
           
+          <div className="h-8"></div> {/* Added space before See Detailed Pricing Plans */}
+          
           <div className="text-center mt-8">
             <Link href="/pricing" className="text-[#1E3A8A] font-medium hover:underline">
               See Detailed Pricing Plans →
             </Link>
           </div>
+          
+          <div className="h-8"></div> {/* Added space after See Detailed Pricing Plans */}
         </div>
       </section>
 
+      <div className="h-8"></div> {/* Added space before Hear From Our Clients section */}
+      
       {/* Testimonials */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -372,6 +438,8 @@ export default function HomePage() {
             ))}
           </div>
           
+          <div className="h-8"></div> {/* Added space before Read All Reviews button */}
+          
           <div className="text-center mt-12">
             <a 
               href="https://www.google.com/search?q=etaxmentor" 
@@ -384,21 +452,23 @@ export default function HomePage() {
               </Button>
             </a>
           </div>
+          
+          <div className="h-8"></div> {/* Added space after Read All Reviews button */}
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 md:py-28 bg-linear-to-br from-[#1E3A8A] to-[#3B82F6] text-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
               Need Help with Your Income Tax Filing?
             </h2>
-            <p className="text-lg md:text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+            <p className="text-center ">
               Avoid Penalties. Maximize Deductions. File Your ITR Accurately with eTaxMentor&apos;s Trusted CAs. 
               100% Compliant and Stress-Free.
             </p>
-            <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-5 justify-end">
               <Link href="/contact">
                 <Button size="xl" variant="secondary" className="min-w-55">
                   Contact Us Today
@@ -415,16 +485,35 @@ export default function HomePage() {
         </div>
       </section>
 
+      <div className="h-8"></div> {/* Added space after blue background section */}
+      
+      {/* Empty White Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-right">
+            {/* Content moved to blue section */}
+          </div>
+        </div>
+      </section>
+
+      <div className="h-8"></div> {/* Added space before Stay Updated section */}
+      
       {/* Newsletter */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               Stay Updated with eTaxMentor
             </h2>
+            
+            <div className="h-8"></div> {/* Added space after Stay Updated heading */}
+            
             <p className="text-gray-600 mb-8">
               Subscribe for the latest tax news, tips, and compliance alerts directly in your inbox
             </p>
+            
+            <div className="h-8"></div> {/* Added space after subscription description */}
+            
             <form className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
               <input 
                 type="email" 
@@ -435,9 +524,11 @@ export default function HomePage() {
                 Subscribe Now
               </Button>
             </form>
+            
+            <div className="h-8"></div> {/* Added space after Subscribe Now button */}
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }

@@ -38,12 +38,11 @@ export default function Header() {
                 </div>
               ) : (
                 <>
-                  <Link href="/login" className="hover:text-blue-200 transition-colors">
+                  <Link href="/login" className="px-4 py-2 text-white font-medium hover:bg-white/10 rounded-lg transition-colors">
                     Login
                   </Link>
-                  <span className="text-blue-300">|</span>
-                  <Link href="/register" className="hover:text-blue-200 transition-colors">
-                    Register
+                  <Link href="/register" className="px-4 py-2 bg-white text-[#1E3A8A] font-semibold rounded-lg hover:bg-gray-100 transition-colors ml-2">
+                    Sign Up
                   </Link>
                 </>
               )
@@ -169,10 +168,10 @@ export default function Header() {
                     Login
                   </Link>
                   <Link
-                    href="/services/itr-filing"
+                    href="/register"
                     className="px-5 py-2.5 bg-linear-to-r from-[#10B981] to-[#059669] text-white font-semibold rounded-lg hover:shadow-lg transition-all hover:-translate-y-0.5"
                   >
-                    File ITR Now
+                    Sign Up
                   </Link>
                 </>
               )
@@ -236,11 +235,11 @@ export default function Header() {
                       Login
                     </Link>
                     <Link
-                      href="/services/itr-filing"
+                      href="/register"
                       onClick={() => setIsMenuOpen(false)}
                       className="mx-4 py-3 bg-linear-to-r from-[#10B981] to-[#059669] text-white font-semibold rounded-lg text-center hover:shadow-lg transition-all"
                     >
-                      File ITR Now
+                      Sign Up
                     </Link>
                   </>
                 )
