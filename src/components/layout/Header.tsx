@@ -50,15 +50,16 @@ export default function Header() {
                   
                   {/* Dropdown */}
                   {isServicesOpen && (
-                    <div className="absolute top-full left-0 w-72 bg-white rounded-xl shadow-xl border border-gray-100 py-2 animate-fadeIn">
+                    <div className="absolute top-full ml-10/12  w-90 bg-white rounded-xl shadow-xl border border-gray-100  animate-fadeIn">
                       {NAV_LINKS.services.map((service) => (
                         <Link
                           key={service.name}
                           href={service.href}
-                          className="block px-4 py-3 hover:bg-gray-50 transition-colors"
+                          className="block px-6 py-3 hover:bg-gray-50 transition-all group"
                         >
-                          <div className="font-medium text-gray-800">{service.name}</div>
-                          <div className="text-sm text-gray-500">{service.description}</div>
+                          <div className=" font-medium text-gray-800  text-[15px]  decoration-gray-400 underline-offset-4 group-hover:decoration-[#1E3A8A] group-hover:text-[#1E3A8A] transition-all">
+                            {service.name}
+                          </div>
                         </Link>
                       ))}
                     </div>
