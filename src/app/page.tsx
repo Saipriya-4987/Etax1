@@ -74,7 +74,7 @@ export default function HomePage() {
 
       {/* Text Section Below Hero */}
       <section className="bg-white py-12">
-        <p className="text-center">
+        <p className="text-center font-bold">
 
           Seamless tax compliance powered by AI and expertise. All-in-one platform for 
           ITR filing, GST, TDS, CFO, and business structuring services.
@@ -95,57 +95,57 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+{/* File ITR Options */}
+<section className="py-20 bg-white">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-12">
+      <div className="h-4"></div> {/* Added space */}
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Start Your <span className="text-[#1E3A8A]">Tax Filing</span> Journey
+      </h2>
+      <div className="h-4"></div> {/* Added space */}
+      <p className="text-lg text-gray-600">Choose your preferred filing method</p>
+    </div>
 
-      {/* File ITR Options */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              <div className="h-4"></div> {/* Added space */}
-              Start Your <span className="text-[#1E3A8A]">Tax Filing</span> Journey
-            </h2>
-            <div className="h-4"></div> {/* Added space */}
-            <p className="text-lg text-gray-600">Choose your preferred filing method</p>
-          </div>
-          <div className="h-4"></div> {/* Added space */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Option 1 */}
-            <div className="bg-linear-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-10 border border-blue-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
-              <div className="w-16 h-16 bg-[#1E3A8A] rounded-xl flex items-center justify-center mb-6">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">File ITR with eTaxMentor</h3>
-              <p className="text-gray-600 mb-8 grow">
-                Get your ITR filed by expert CAs with secure, accurate, and personalized support for maximum savings.
-              </p>
-              <Link href="/services/itr-filing" className="mt-auto">
-                <Button size="lg" variant="primary" className="w-full">
-                  File with an Expert
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-            
-            {/* Option 2 */}
-            <div className="bg-linear-to-br from-green-50 to-emerald-50 rounded-2xl p-8 md:p-10 border border-green-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
-              <div className="w-16 h-16 bg-[#10B981] rounded-xl flex items-center justify-center mb-6">
-                <FileText className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">File ITR Yourself</h3>
-              <p className="text-gray-600 mb-8 grow">
-                Quick and simple ITR filing with step-by-step guidance and complete compliance support — all done online.
-              </p>
-              <Link href="/dashboard/itr-filing/new" className="mt-auto">
-                <Button size="lg" variant="secondary" className="w-full">
-                  File Your ITR Now
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-          </div>
+    {/* Perfectly centered flex */}
+    <div className="flex flex-col md:flex-row justify-center items-center gap-8">
+      {/* Option 1 */}
+      <div className="bg-linear-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-10 border border-blue-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col w-full md:w-96">
+        <div className="w-16 h-16 bg-[#1E3A8A] rounded-xl flex items-center justify-center mb-6">
+          <Users className="w-8 h-8 text-white" />
         </div>
-      </section>
+        <h3 className="text-2xl font-bold text-gray-900 mb-3">File ITR with eTaxMentor</h3>
+        <p className="text-gray-600 mb-8 grow">
+          Get your ITR filed by expert CAs with secure, accurate, and personalized support for maximum savings.
+        </p>
+        <Link href="/services/itr-filing" className="mt-auto w-full">
+          <Button size="lg" variant="primary" className="w-full flex items-center justify-center gap-2">
+            File with an Expert
+            <ArrowRight className="w-5 h-5" />
+          </Button>
+        </Link>
+      </div>
+
+      {/* Option 2 */}
+      <div className="bg-linear-to-br from-green-50 to-emerald-50 rounded-2xl p-8 md:p-10 border border-green-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col w-full md:w-96">
+        <div className="w-16 h-16 bg-[#10B981] rounded-xl flex items-center justify-center mb-6">
+          <FileText className="w-8 h-8 text-white" />
+        </div>
+        <h3 className="text-2xl font-bold text-gray-900 mb-3">File ITR Yourself</h3>
+        <p className="text-gray-600 mb-8 grow">
+          Quick and simple ITR filing with step-by-step guidance and complete compliance support — all done online.
+        </p>
+        <Link href="/dashboard/itr-filing/new" className="mt-auto w-full">
+          <Button size="lg" variant="secondary" className="w-full flex items-center justify-center gap-2">
+            File Your ITR Now
+            <ArrowRight className="w-5 h-5" />
+          </Button>
+        </Link>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       <div className="h-12 md:h-16"></div> {/* Spacing before Why Choose Us */}
 
@@ -228,7 +228,9 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Who We <span className="text-[#1E3A8A]">Serve</span>
             </h2>
+            <div className="h-4"></div> {/* Added space */}
             <div className="flex justify-center">
+              
               <p className="text-lg text-gray-600 max-w-2xl text-center mt-2 whitespace-nowrap">
                 
   From salaried individuals and gig workers to fast-growing startups, NGOs, and large enterprises
@@ -464,23 +466,26 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
               Need Help with Your Income Tax Filing?
             </h2>
+            <div className="h-8"></div> 
             <p className="text-center ">
               Avoid Penalties. Maximize Deductions. File Your ITR Accurately with eTaxMentor&apos;s Trusted CAs. 
               100% Compliant and Stress-Free.
             </p>
-            <div className="flex flex-col sm:flex-row gap-5 justify-end">
-              <Link href="/contact">
-                <Button size="xl" variant="secondary" className="min-w-55">
-                  Contact Us Today
-                  <ArrowRight className="w-6 h-6" />
-                </Button>
-              </Link>
-              <Link href="/services/itr-filing">
-                <Button size="xl" variant="outline" className="min-w-55 border-white text-white hover:bg-white hover:text-[#1E3A8A]">
-                  Start Filing Now
-                </Button>
-              </Link>
-            </div>
+            <div className="h-8"></div> 
+            <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+  <Link href="/contact">
+    <Button size="xl" variant="secondary" className="min-w-55 flex items-center justify-center gap-2">
+      Contact Us Today
+      <ArrowRight className="w-6 h-6" />
+    </Button>
+  </Link>
+  <Link href="/services/itr-filing">
+    <Button size="xl" variant="outline" className="min-w-55 border-white text-white hover:bg-white hover:text-[#1E3A8A]">
+      Start Filing Now
+    </Button>
+  </Link>
+</div>
+
           </div>
         </div>
       </section>
@@ -514,16 +519,17 @@ export default function HomePage() {
             
             <div className="h-8"></div> {/* Added space after subscription description */}
             
-            <form className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-              <input 
-                type="email" 
-                placeholder="Enter your email address" 
-                className="flex-1 px-5 py-4 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] text-base"
-              />
-              <Button type="submit" size="lg" variant="primary" className="sm:min-w-45">
-                Subscribe Now
-              </Button>
-            </form>
+           <form className="flex flex-col sm:flex-row justify-center items-center gap-4 mx-auto">
+  <input 
+    type="email" 
+    placeholder="Enter your email address" 
+    className="w-full sm:w-72 px-5 py-4 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] text-base"
+  />
+  <Button type="submit" size="lg" variant="primary" className="w-full sm:w-auto">
+    Subscribe Now
+  </Button>
+</form>
+
             
             <div className="h-8"></div> {/* Added space after Subscribe Now button */}
           </div>
