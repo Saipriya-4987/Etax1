@@ -35,58 +35,72 @@ const iconMap: Record<string, React.ElementType> = {
 export default function HomePage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative bg-linear-to-br from-[#1E3A8A] via-[#1E40AF] to-[#3B82F6] text-white overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-        </div>
-        
-        <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
-              <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-              <span className="text-sm font-medium">Trusted by 10,000+ Happy Clients</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight tracking-tight">
-              Empower Your <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 to-emerald-300">
-                Financial Future
-              </span>
-              <br className="hidden md:block" />
-              with Expert Tax Solutions
-            </h1>
-            
-            <p className="text-lg md:text-xl text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Seamless tax compliance powered by AI and expertise. All-in-one platform for 
-              ITR filing, GST, TDS, CFO, and business structuring services.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-5 justify-center items-center mt-10">
-              <Link href="/services/itr-filing">
-                <Button size="xl" variant="secondary" className="w-full sm:w-auto min-w-55">
-                  Explore Services
-                  <ArrowRight className="w-6 h-6" />
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button size="xl" variant="outline" className="w-full sm:w-auto min-w-55">
-                  Talk to Expert
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-        
-        {/* Wave Divider */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
-          </svg>
-        </div>
-      </section>
+     {/* Hero Section */}
+<section className="relative bg-linear-to-br from-[#1E3A8A] via-[#1E40AF] to-[#3B82F6] text-white overflow-hidden flex justify-center">
+
+  {/* Background Pattern */}
+  <div className="absolute inset-0 opacity-10">
+    <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+    <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+  </div>
+
+  {/* True viewport-centered content */}
+  <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
+    <div className="relative left-1/2 -translate-x-1/2 w-full max-w-4xl text-center flex flex-col items-center gap-11">
+
+      <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+        <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+        <span className="text-sm font-medium">
+          Trusted by 10,000+ Happy Clients
+        </span>
+      </div>
+
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+        Empower Your <br className="hidden md:block" />
+        <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 to-emerald-300">
+          Financial Future
+        </span>
+        <br className="hidden md:block" />
+        with Expert Tax Solutions
+      </h1>
+
+      <p className="text-lg md:text-xl text-blue-100 max-w-2xl leading-relaxed -mt-4">
+        Seamless tax compliance powered by AI and expertise. All-in-one platform for
+        ITR filing, GST, TDS, CFO, and business structuring services.
+      </p>
+
+      <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-4">
+        <Link href="/services/itr-filing">
+          <Button size="xl" variant="secondary" className="w-full sm:w-auto min-w-55">
+            Explore Services
+            <ArrowRight className="w-6 h-6" />
+          </Button>
+        </Link>
+
+        <Link href="/contact">
+          <Button
+            size="xl"
+            variant="outline"
+            className="w-full sm:w-auto min-w-55 bg-white text-[#1E3A8A]"
+          >
+            Talk to Expert
+          </Button>
+        </Link>
+      </div>
+
+    </div>
+  </div>
+
+  {/* Wave Divider */}
+  <div className="absolute bottom-0 left-0 right-0">
+    <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z"
+        fill="white"
+      />
+    </svg>
+  </div>
+</section>
 
       {/* File ITR Options */}
       <section className="py-20 md:py-28 bg-white">
