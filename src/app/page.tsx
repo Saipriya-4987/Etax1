@@ -33,8 +33,8 @@ const iconMap: Record<string, React.ElementType> = {
 
 export default function HomePage() {
   return (
-    <>
-      {/* Hero Section */}
+     <div className="flex flex-col gap-20 md:gap-17">
+      
       {/* Hero Section */}
 <section className="relative bg-linear-to-br from-[#1E3A8A] via-[#1E40AF] to-[#3B82F6] text-white overflow-hidden flex justify-center">
 
@@ -131,8 +131,9 @@ export default function HomePage() {
 
 {/*stat your tax filing */}
 
-<section className="py-20 md:py-28 bg-white">
-  <div className="container mx-auto px-4 relative left-1/2 -translate-x-1/2 w-full max-w-4xl text-center flex flex-col items-center gap-11">
+<section className="py-14 md:py-20 bg-white flex justify-center">
+ <div className="container mx-auto px-4 max-w-5xl text-center flex flex-col items-center">
+
     <div className="text-center mb-16">
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
         Start Your <span className="text-[#1E3A8A]">Tax Filing</span> Journey
@@ -213,25 +214,28 @@ export default function HomePage() {
 </section>
 
       {/* Why Choose Us */}
-      <section className="py-20 md:py-28 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Why Choose <span className="text-[#1E3A8A]">eTaxMentor</span>
-            </h2>
-            <p className="text-lg text-gray-600 font-medium max-w-2xl mx-auto">
-              Experience Excellence in Tax Services with over 24 years of expertise
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-5xl mx-auto mb-12">
-            <div className="text-center p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
-              <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                <Users className="w-8 h-8 text-[#1E3A8A]" />
-              </div>
-              <div className="text-4xl font-bold text-[#1E3A8A] mb-2">{APP_CONFIG.stats.clients}</div>
-              <div className="text-gray-600 font-medium">Happy Clients</div>
-            </div>
+      <section className="py-14 md:py-20 bg-gray-50">
+  <div className="container mx-auto px-4 max-w-5xl text-center flex flex-col items-center gap-8">
+
+    
+    <div className="text-center mb-16">
+  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+    Why Choose <span className="text-[#1E3A8A]">eTaxMentor</span>
+  </h2>
+  <p className="text-lg text-gray-600 font-medium max-w-2xl mx-auto mt-10">
+    Experience Excellence in Tax Services with over 24 years of expertise
+  </p>
+</div>
+
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 w-full">
+   
+      <div className="text-center p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
+        <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+          <Users className="w-8 h-8 text-[#1E3A8A]" />
+        </div>
+        <div className="text-4xl font-bold text-[#1E3A8A] mb-2">{APP_CONFIG.stats.clients}</div>
+        <div className="text-gray-600 font-medium">Happy Clients</div>
+      </div>
             
             <div className="text-center p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
               <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
@@ -258,263 +262,322 @@ export default function HomePage() {
             </div>
           </div>
           
-          <div className="text-center">
-            <Link href="/about">
-              <Button size="lg" variant="outline" className="font-semibold">
-                Discover the eTaxMentor Advantage
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-            </Link>
+           <div className="text-center">
+      <Link href="/about">
+        <Button size="lg" variant="outline" className="font-semibold">
+          Discover the eTaxMentor Advantage
+          <ArrowRight className="w-5 h-5" />
+        </Button>
+      </Link>
           </div>
         </div>
       </section>
 
       {/* Who We Serve */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Who We <span className="text-[#1E3A8A]">Serve</span>
-            </h2>
-            <p className="text-lg text-gray-600 font-medium max-w-2xl mx-auto">
-              From salaried individuals and gig workers to fast-growing startups, NGOs, and large enterprises
-            </p>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
-            {TARGET_AUDIENCE.map((item) => {
-              const Icon = iconMap[item.icon] || Briefcase
-              return (
-                <div 
-                  key={item.title}
-                  className="flex items-center gap-3 px-6 py-4 bg-gray-50 hover:bg-blue-50 rounded-full border border-gray-200 hover:border-blue-200 transition-all cursor-pointer group font-medium"
-                >
-                  <Icon className="w-5 h-5 text-gray-500 group-hover:text-[#1E3A8A] transition-colors" />
-                  <span className="text-gray-700 group-hover:text-[#1E3A8A] transition-colors">{item.title}</span>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
 
-      {/* Services */}
-      <section className="py-20 md:py-28 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Our <span className="text-[#1E3A8A]">Services</span>
-            </h2>
-            <p className="text-lg text-gray-600 font-medium max-w-2xl mx-auto">
-              From Tax Filing to CFO Advisory — We&apos;ve Got You Covered
-            </p>
+<section className="py-20 md:py-28 bg-white">
+  <div className="relative left-1/2 -translate-x-1/2 w-full max-w-5xl text-center flex flex-col items-center gap-16 px-4">
+    
+    {/* Heading */}
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        Who We <span className="text-[#1E3A8A]">Serve</span>
+      </h2>
+      <p className="text-lg text-gray-600 font-medium max-w-2xl mx-auto">
+        From salaried individuals and gig workers to fast-growing startups, NGOs, and large enterprises
+      </p>
+    </div>
+
+    {/* Audience Tags */}
+    <div className="flex flex-wrap justify-center gap-4 w-full">
+      {TARGET_AUDIENCE.map((item) => {
+        const Icon = iconMap[item.icon] || Briefcase
+        return (
+          <div 
+            key={item.title}
+            className="flex items-center gap-3 px-6 py-4 bg-gray-50 hover:bg-blue-50 rounded-full border border-gray-200 hover:border-blue-200 transition-all cursor-pointer group font-medium"
+          >
+            <Icon className="w-5 h-5 text-gray-500 group-hover:text-[#1E3A8A] transition-colors" />
+            <span className="text-gray-700 group-hover:text-[#1E3A8A] transition-colors">{item.title}</span>
           </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
-            {[
-              { icon: Calculator, title: 'ITR Filing', desc: 'Income tax returns filed by expert CAs', color: 'blue', href: '/services/itr-filing' },
-              { icon: FileText, title: 'GST Services', desc: 'GST registration, filing & compliance', color: 'green', href: '/services/gst' },
-              { icon: ShieldCheck, title: 'Tax Advisory', desc: 'Expert tax planning and consultation', color: 'purple', href: '/services' },
-              { icon: Briefcase, title: 'CFO Services', desc: 'On-demand CFOs for finance management', color: 'orange', href: '/services' },
-              { icon: Building2, title: 'Business Setup', desc: 'Company incorporation & structuring', color: 'indigo', href: '/services' },
-              { icon: Award, title: 'Compliance', desc: 'ROC filings & statutory compliance', color: 'pink', href: '/services' },
-            ].map((service) => (
-              <Link 
-                key={service.title}
-                href={service.href}
-                className="bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group block"
-              >
-                <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <service.icon className="w-7 h-7 text-[#1E3A8A]" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">{service.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{service.desc}</p>
-              </Link>
-            ))}
+        )
+      })}
+    </div>
+  </div>
+</section>
+
+
+
+     {/* Services */}
+<section className="py-14 md:py-20 bg-gray-50">
+  <div className="relative left-1/2 -translate-x-1/2 w-full max-w-6xl text-center flex flex-col items-center gap-16 px-4">
+    
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        Our <span className="text-[#1E3A8A]">Services</span>
+      </h2>
+      <p className="text-lg text-gray-600 font-medium max-w-2xl mx-auto">
+        From Tax Filing to CFO Advisory — We&apos;ve Got You Covered
+      </p>
+    </div>
+
+    {/* Services Grid */}
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+      {[
+        { icon: Calculator, title: 'ITR Filing', desc: 'Income tax returns filed by expert CAs', color: 'blue', href: '/services/itr-filing' },
+        { icon: FileText, title: 'GST Services', desc: 'GST registration, filing & compliance', color: 'green', href: '/services/gst' },
+        { icon: ShieldCheck, title: 'Tax Advisory', desc: 'Expert tax planning and consultation', color: 'purple', href: '/services' },
+        { icon: Briefcase, title: 'CFO Services', desc: 'On-demand CFOs for finance management', color: 'orange', href: '/services' },
+        { icon: Building2, title: 'Business Setup', desc: 'Company incorporation & structuring', color: 'indigo', href: '/services' },
+        { icon: Award, title: 'Compliance', desc: 'ROC filings & statutory compliance', color: 'pink', href: '/services' },
+      ].map((service) => (
+        <Link 
+          key={service.title}
+          href={service.href}
+          className="bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group block"
+        >
+          <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <service.icon className="w-7 h-7 text-[#1E3A8A]" />
           </div>
-          
-          <div className="text-center">
-            <Link href="/services">
-              <Button size="lg" variant="primary" className="font-semibold">
-                Explore All Services
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+          <h3 className="text-xl font-semibold text-gray-900 mb-3">{service.title}</h3>
+          <p className="text-gray-600 leading-relaxed">{service.desc}</p>
+        </Link>
+      ))}
+    </div>
+
+    {/* CTA Button */}
+    <div className="text-center">
+      <Link href="/services">
+        <Button size="lg" variant="primary" className="font-semibold">
+          Explore All Services
+          <ArrowRight className="w-5 h-5" />
+        </Button>
+      </Link>
+    </div>
+  </div>
+</section>
+
 
       {/* Pricing */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Transparent <span className="text-[#1E3A8A]">Pricing</span> Plans
-            </h2>
-            <p className="text-lg text-gray-600 font-medium max-w-2xl mx-auto">
-              Choose the plan that fits your needs
-            </p>
-          </div>
+     {/* Pricing */}
+<section className="py-14 md:py-20 bg-white">
+  <div className="relative left-1/2 -translate-x-1/2 w-full max-w-7xl text-center flex flex-col items-center gap-16 px-4">
+
+    {/* Heading */}
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        Transparent <span className="text-[#1E3A8A]">Pricing</span> Plans
+      </h2>
+      <p className="text-lg text-gray-600 font-medium max-w-2xl mx-auto">
+        Choose the plan that fits your needs
+      </p>
+    </div>
+
+    {/* Pricing Grid */}
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+      {PRICING_PLANS.map((plan) => (
+        <div 
+          key={plan.name}
+          className={`relative bg-white rounded-2xl p-7 border-2 ${
+            plan.popular ? 'border-[#1E3A8A] shadow-xl' : 'border-gray-100'
+          } hover:shadow-lg transition-all duration-300`}
+        >
+          {plan.popular && (
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#1E3A8A] text-white text-xs font-bold px-4 py-1.5 rounded-full">
+              Most Popular
+            </div>
+          )}
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-10">
-            {PRICING_PLANS.map((plan) => (
-              <div 
-                key={plan.name}
-                className={`relative bg-white rounded-2xl p-7 border-2 ${
-                  plan.popular ? 'border-[#1E3A8A] shadow-xl' : 'border-gray-100'
-                } hover:shadow-lg transition-all duration-300`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#1E3A8A] text-white text-xs font-bold px-4 py-1.5 rounded-full">
-                    Most Popular
-                  </div>
+          <h3 className="text-lg font-bold text-gray-900 mb-3">{plan.name}</h3>
+          
+          <div className="mb-5">
+            {plan.price ? (
+              <>
+                {plan.originalPrice && (
+                  <span className="text-gray-400 line-through text-sm">₹{plan.originalPrice}</span>
                 )}
-                
-                <h3 className="text-lg font-bold text-gray-900 mb-3">{plan.name}</h3>
-                
-                <div className="mb-5">
-                  {plan.price ? (
-                    <>
-                      {plan.originalPrice && (
-                        <span className="text-gray-400 line-through text-sm">₹{plan.originalPrice}</span>
-                      )}
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-4xl font-bold text-[#1E3A8A]">₹{plan.price}</span>
-                      </div>
-                    </>
-                  ) : (
-                    <span className="text-2xl font-bold text-[#1E3A8A]">Custom</span>
-                  )}
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-bold text-[#1E3A8A]">₹{plan.price}</span>
                 </div>
-                
-                <p className="text-sm text-gray-600 mb-5 line-clamp-2">{plan.description}</p>
-                
-                <ul className="space-y-3 mb-6">
-                  {plan.features.slice(0, 5).map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                      <CheckCircle className="w-4 h-4 text-green-500 shrink-0 mt-0.5 flex-shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <Link href="/pricing" className="block">
-                  <Button 
-                    variant={plan.popular ? 'primary' : 'outline'} 
-                    className="w-full font-semibold"
-                  >
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
-            ))}
+              </>
+            ) : (
+              <span className="text-2xl font-bold text-[#1E3A8A]">Custom</span>
+            )}
           </div>
           
-          <div className="text-center">
-            <Link href="/pricing" className="text-[#1E3A8A] font-semibold hover:underline text-lg">
-              See Detailed Pricing Plans →
-            </Link>
-          </div>
+          <p className="text-sm text-gray-600 mb-5 line-clamp-2">{plan.description}</p>
+          
+          <ul className="space-y-3 mb-6">
+            {plan.features.slice(0, 5).map((feature, idx) => (
+              <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                <CheckCircle className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+          
+          <Link href="/pricing" className="block">
+            <Button 
+              variant={plan.popular ? 'primary' : 'outline'} 
+              className="w-full font-semibold"
+            >
+              Get Started
+            </Button>
+          </Link>
         </div>
-      </section>
+      ))}
+    </div>
+
+    {/* CTA */}
+    <div className="text-center">
+      <Link href="/pricing" className="text-[#1E3A8A] font-semibold hover:underline text-lg">
+        See Detailed Pricing Plans →
+      </Link>
+    </div>
+  </div>
+</section>
+
 
       {/* Testimonials */}
-      <section className="py-20 md:py-28 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Hear From Our <span className="text-[#1E3A8A]">Clients</span>
-            </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
-            {TESTIMONIALS.slice(0, 6).map((testimonial, idx) => (
-              <div key={idx} className="bg-white rounded-2xl p-7 shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-5 italic leading-relaxed">&quot;{testimonial.text}&quot;</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 bg-[#1E3A8A] rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div>
-                    <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                    <div className="text-xs text-gray-500">{testimonial.source}</div>
-                  </div>
-                </div>
-              </div>
+<section className="py-14 md:py-20 bg-gray-50">
+  <div className="relative left-1/2 -translate-x-1/2 w-full max-w-6xl text-center flex flex-col items-center gap-16 px-4">
+
+    {/* Heading */}
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        Hear From Our <span className="text-[#1E3A8A]">Clients</span>
+      </h2>
+    </div>
+
+    {/* Testimonials Grid */}
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+      {TESTIMONIALS.slice(0, 6).map((testimonial, idx) => (
+        <div key={idx} className="bg-white rounded-2xl p-7 shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
+          <div className="flex items-center gap-1 mb-4">
+            {[...Array(testimonial.rating)].map((_, i) => (
+              <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
             ))}
           </div>
-          
-          <div className="text-center">
-            <a 
-              href="https://www.google.com/search?q=etaxmentor" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              <Button size="lg" variant="outline" className="font-semibold">
-                Read All Reviews
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 md:py-28 bg-linear-to-br from-[#1E3A8A] to-[#3B82F6] text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
-              Need Help with Your Income Tax Filing?
-            </h2>
-            <p className="text-lg md:text-xl text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
-              Avoid Penalties. Maximize Deductions. File Your ITR Accurately with eTaxMentor&apos;s Trusted CAs. 
-              100% Compliant and Stress-Free.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Link href="/contact">
-                <Button size="xl" variant="secondary" className="min-w-56 font-semibold">
-                  Contact Us Today
-                  <ArrowRight className="w-6 h-6" />
-                </Button>
-              </Link>
-              <Link href="/services/itr-filing">
-                <Button size="xl" variant="outline" className="min-w-56 border-white text-white hover:bg-white hover:text-[#1E3A8A] font-semibold">
-                  Start Filing Now
-                </Button>
-              </Link>
+          <p className="text-gray-600 mb-5 italic leading-relaxed">&quot;{testimonial.text}&quot;</p>
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 bg-[#1E3A8A] rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
+              {testimonial.name.charAt(0)}
+            </div>
+            <div>
+              <div className="font-semibold text-gray-900">{testimonial.name}</div>
+              <div className="text-xs text-gray-500">{testimonial.source}</div>
             </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
 
-      {/* Newsletter */}
-      <section className="py-20 md:py-28 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Stay Updated with eTaxMentor
-            </h2>
-            <p className="text-gray-600 mb-10 text-lg font-medium">
-              Subscribe for the latest tax news, tips, and compliance alerts directly in your inbox
-            </p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-              <input 
-                type="email" 
-                placeholder="Enter your email address" 
-                className="flex-1 px-5 py-4 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] text-base"
-              />
-              <Button type="submit" size="lg" variant="primary" className="sm:min-w-48 font-semibold">
-                Subscribe Now
-              </Button>
-            </form>
-          </div>
-        </div>
-      </section>
-    </>
+    {/* CTA Button */}
+    <div className="text-center">
+      <a 
+        href="https://www.google.com/search?q=etaxmentor" 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        <Button size="lg" variant="outline" className="font-semibold">
+          Read All Reviews
+          <ArrowRight className="w-5 h-5" />
+        </Button>
+      </a>
+    </div>
+  </div>
+</section>
+
+      {/* CTA Section */}
+<section className="py-20 md:py-28 bg-linear-to-br from-[#1E3A8A] to-[#3B82F6] text-white">
+  <div className="relative left-1/2 -translate-x-1/2 w-full max-w-4xl flex flex-col items-center gap-12 px-4 text-center">
+    
+    <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
+      Need Help with Your Income Tax Filing?
+    </h2>
+
+    <p className="text-lg md:text-xl text-blue-100 max-w-2xl leading-relaxed font-medium">
+      Avoid Penalties. Maximize Deductions. File Your ITR Accurately with eTaxMentor&apos;s Trusted CAs. 
+      100% Compliant and Stress-Free.
+    </p>
+
+     <div className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full">
+
+  <Link href="/contact" className="inline-flex">
+    <Button
+      size="xl"
+      variant="secondary"
+      className="
+        min-w-[180px]
+        h-11
+        px-7
+        rounded-full
+        font-bold
+        leading-none
+        whitespace-nowrap
+        transition-all
+        hover:shadow-lg
+        hover:-translate-y-0.5
+      "
+    >
+      Contact Us Today
+      <ArrowRight className="w-5 h-5 ml-1" />
+    </Button>
+  </Link>
+
+  <Link href="/services/itr-filing" className="inline-flex">
+    <Button
+      size="xl"
+      variant="outline"
+      className="
+        min-w-[180px]
+        h-11
+        px-7
+        rounded-full
+        font-bold
+        leading-none
+        whitespace-nowrap
+        transition-all
+        hover:shadow-lg
+        hover:-translate-y-0.5
+      "
+    >
+      Start Filing Now
+    </Button>
+  </Link>
+
+</div>
+
+  </div>
+</section>
+
+
+{/* Newsletter */}
+<section className="py-14 md:py-20 bg-gray-50"> {/* Increased top/bottom padding */}
+  <div className="relative left-1/2 -translate-x-1/2 w-full max-w-3xl flex flex-col items-center gap-6 px-4 text-center"> {/* gap-12 for vertical spacing */}
+
+    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+      Stay Updated with eTaxMentor
+    </h2>
+
+    <p className="text-gray-600 text-lg font-medium mb-8">
+      Subscribe for the latest tax news, tips, and compliance alerts directly in your inbox
+    </p>
+
+    <form className="flex flex-col sm:flex-row gap-4 w-full">
+      <input 
+        type="email" 
+        placeholder="Enter your email address" 
+        className="flex-1 px-5 py-4 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] text-base"
+      />
+      <Button type="submit" size="lg" variant="primary" className="sm:min-w-48 font-semibold">
+        Subscribe Now
+      </Button>
+    </form>
+
+  </div>
+</section>
+
+    </div>
   )
 }
